@@ -383,7 +383,7 @@ function App() {
           <div className="footer-cursor-mark" aria-hidden="true">
             <span></span>
           </div>
-          <p className="footer-kicker">Have a project in mind?</p>
+          <p className="footer-kicker"></p>
           <h2>
           <em>Reach Out.</em>
           </h2>
