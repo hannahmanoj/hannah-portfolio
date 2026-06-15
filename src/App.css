@@ -547,6 +547,10 @@ h1 {
   border-bottom: 1px solid var(--line);
 }
 
+.experience-card + .experience-card {
+  border-top: 0;
+}
+
 .experience-card h3,
 .experience-card p {
   margin: 0;
@@ -1127,4 +1131,3 @@ h1 {
     min-height: 58px;
   }
 }
-

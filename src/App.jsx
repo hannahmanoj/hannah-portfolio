@@ -6,6 +6,12 @@ import './App.css'
 
 const projects = [
   {
+    title: 'SourceWise',
+    type: 'Reasoning Agents project',
+    detail: 'AI-guided research discovery app that maps broad topics into themes, ranked academic papers, credibility signals, debates, comparisons, and saved research history using Semantic Scholar, Microsoft Foundry IQ, and Supabase.',
+    href: 'https://source-wise-two.vercel.app/',
+  },
+  {
     title: 'Smart Door Security System',
     type: 'Team project',
     detail: 'Affordable facial-recognition security system for homes, schools, and businesses using an iOS app, React, Raspberry Pi, and OpenCV.',
@@ -267,7 +273,7 @@ function App() {
             <div className="nav-main-links">
               <a href="#about">About</a>
               <a href="#experience">Experience</a>
-              <a href="#work">Projects 03</a>
+              <a href="#work">Projects 04</a>
               <a href="/resume.pdf" className="resume-link" download>Résumé ↗</a>
             </div>
             <a href="mailto:hello@example.com">Contact</a>
@@ -338,7 +344,19 @@ function App() {
         </div>
         <article className="experience-card">
           <div>
-            <p className="eyebrow">Amazon · Placement year</p>
+            <p className="eyebrow">Madayn · Muscat, Oman</p>
+            <h3>Data Engineer Intern</h3>
+          </div>
+          <p>June 2026 - Present</p>
+          <ul>
+            <li>
+              Supporting data engineering work across data workflows, reporting, and analytics.
+            </li>
+          </ul>
+        </article>
+        <article className="experience-card">
+          <div>
+            <p className="eyebrow">Amazon · London, England</p>
             <h3>Business Intelligence Engineer Intern</h3>
           </div>
           <p>June 2025 - May 2026</p>
@@ -387,7 +405,7 @@ function App() {
           <h2>
           <em>Reach Out.</em>
           </h2>
-          <a className="footer-email" href="mailto:annah.manoj@gmail.com">
+          <a className="footer-email" href="mailto:hannah.manoj@gmail.com">
             hannah.manoj@gmail.com
           </a>
         </div>
