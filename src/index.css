@@ -21,6 +21,7 @@ body {
   min-width: 320px;
   margin: 0;
   background: #fcfaf8;
+  zoom: 0.9;
 }
 
 button,

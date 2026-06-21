@@ -6,22 +6,40 @@ import './App.css'
 
 const projects = [
   {
+    title: 'Shibumi',
+    type: 'Interactive space atlas',
+    images: [
+      '/projects/shibumi.png',
+      '/projects/shibumbi_2.png',
+      '/projects/shibumi_3.png',
+    ],
+    detail: 'Cinematic satellite globe built with Next.js, Mapbox GL JS, Three.js, CelesTrak TLE data, and NASA/JPL Horizons vectors for live Earth and lunar spacecraft visualization.',
+    href: 'https://shibumi-kohl.vercel.app/',
+  },
+  {
     title: 'SourceWise',
-    type: 'Reasoning Agents project',
+    type: 'Microsoft Agents League Hackathon project',
+    images: [
+      '/projects/SourceWise.png',
+      '/projects/SourceWise_2.png',
+      '/projects/SourceWise_3.png',
+    ],
     detail: 'AI-guided research discovery app that maps broad topics into themes, ranked academic papers, credibility signals, debates, comparisons, and saved research history using Semantic Scholar, Microsoft Foundry IQ, and Supabase.',
     href: 'https://source-wise-two.vercel.app/',
   },
   {
     title: 'Smart Door Security System',
     type: 'Team project',
+    images: ['/projects/Smart Door Security System.png'],
     detail: 'Affordable facial-recognition security system for homes, schools, and businesses using an iOS app, React, Raspberry Pi, and OpenCV.',
     href: 'https://www.linkedin.com/posts/hannah-manoj-11b463293_leedsbeckettuniversity-activity-7331292288523907072-iF4z?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEcUmucBD2x1hyizjZCkOYyxEemC-rJVU88',
   },
   {
-    title: 'PL Match Predictor',
+    title: 'Fifa 26 Match Predictor',
     type: 'Machine learning project',
-    detail: 'Premier League match predictor using scikit-learn, Random Forest Classifier, rolling averages, precision scoring, and combined home/away match analysis.',
-    href: 'https://github.com/hannahmanoj/Football-Match-Predictor',
+    images: ['/projects/football.jpg'],
+    detail: 'Streamlit football analytics app that predicts match win/draw/loss probabilities, explains rating and form factors, and runs Monte Carlo simulations for a 2026-style tournament bracket.',
+    href: 'https://football-match-predictor-2026.streamlit.app/',
   },
   {
     title: 'Crime Database Management Application',
@@ -37,6 +55,8 @@ const technologies = [
   { name: 'React.js', mark: '⚛' },
   { name: 'Java', mark: 'Jv' },
 ]
+
+const siteZoom = 0.9
 
 function LotusModel() {
   const { scene } = useGLTF('/models/lotus-3d.glb')
@@ -137,11 +157,13 @@ function getLondonTime() {
 function App() {
   const cursorDotRef = useRef(null)
   const cursorRingRef = useRef(null)
+  const workSectionRef = useRef(null)
   const cursorPosition = useRef({ x: -100, y: -100 })
   const ringPosition = useRef({ x: -100, y: -100 })
   const [showLoader, setShowLoader] = useState(true)
   const [introReady, setIntroReady] = useState(false)
   const [londonTime, setLondonTime] = useState(getLondonTime)
+  const [projectsVisible, setProjectsVisible] = useState(false)
 
   useEffect(() => {
     const introTimer = window.setTimeout(() => {
@@ -163,10 +185,13 @@ function App() {
     )
 
     const handlePointerMove = (event) => {
-      cursorPosition.current = { x: event.clientX, y: event.clientY }
+      const pointerX = event.clientX / siteZoom
+      const pointerY = event.clientY / siteZoom
+
+      cursorPosition.current = { x: pointerX, y: pointerY }
 
       if (cursorDotRef.current) {
-        cursorDotRef.current.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`
+        cursorDotRef.current.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0)`
       }
 
       const darkSection = document.elementFromPoint(event.clientX, event.clientY)?.closest('.contact-footer')
@@ -247,6 +272,30 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    const workSection = workSectionRef.current
+
+    if (!workSection) {
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setProjectsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.18 },
+    )
+
+    observer.observe(workSection)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
   return (
     <main className={introReady ? 'intro-ready' : ''}>
       <div className="cursor-ring" ref={cursorRingRef} aria-hidden="true"></div>
@@ -273,7 +322,7 @@ function App() {
             <div className="nav-main-links">
               <a href="#about">About</a>
               <a href="#experience">Experience</a>
-              <a href="#work">Projects 04</a>
+              <a href="#work">Projects 05</a>
               <a href="/resume.pdf" className="resume-link" download>Résumé ↗</a>
             </div>
             <a href="mailto:hello@example.com">Contact</a>
@@ -377,22 +426,32 @@ function App() {
         </article>
       </section>
 
-      <section className="work-section" id="work">
+      <section className={`work-section ${projectsVisible ? 'projects-visible' : ''}`} id="work" ref={workSectionRef}>
         <div className="section-heading">
           <h2>
-            <span>Selected</span> <em>projects</em>
+            <span>projects</span> <em></em>
           </h2>
         </div>
         <div className="project-grid">
-          {projects.map((project) => (
-            <article className="project-card" key={project.title}>
-              <h3>{project.title}</h3>
-              <p>{project.detail}</p>
-              <a href={project.href} target="_blank" rel="noreferrer">
-                {project.type} <span className="project-arrow" aria-hidden="true">↗</span>
-              </a>
-            </article>
-          ))}
+          {projects.map((project) => {
+            const projectImages = project.images ?? []
+            const currentImage = projectImages[0]
+
+            return (
+              <article className={`project-card ${projectImages.length ? '' : 'project-card-text-only'}`} key={project.title}>
+                <div className="project-identity">
+                  {currentImage && (
+                    <img src={currentImage} alt="" loading="lazy" aria-hidden="true" />
+                  )}
+                  <h3>{project.title}</h3>
+                </div>
+                <p className="project-type">{project.type}</p>
+                <a className="project-link" href={project.href} target="_blank" rel="noreferrer" aria-label={`View ${project.title}: ${project.detail}`}>
+                  View project <span className="project-arrow" aria-hidden="true">›</span>
+                </a>
+              </article>
+            )
+          })}
         </div>
       </section>
 
