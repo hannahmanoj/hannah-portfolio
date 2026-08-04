@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
+import { createPortal } from 'react-dom'
 import * as THREE from 'three'
 import './App.css'
 
@@ -13,18 +14,18 @@ const projects = [
       '/projects/shibumbi_2.png',
       '/projects/shibumi_3.png',
     ],
-    detail: 'Cinematic satellite globe built with Next.js, Mapbox GL JS, Three.js, CelesTrak TLE data, and NASA/JPL Horizons vectors for live Earth and lunar spacecraft visualization.',
+    detail: 'Shibumi is an interactive space atlas featuring 11,000+ live satellites, cinematic orbital visualizations, 3D planets, and real NASA/JPL lunar data. Built with Next.js, Mapbox GL JS, Three.js, and Vercel.',
     href: 'https://shibumi-kohl.vercel.app/',
   },
   {
     title: 'SourceWise',
-    type: 'Microsoft Agents League Hackathon project',
+    type: 'Multi AI agent research assistant',
     images: [
       '/projects/SourceWise.png',
       '/projects/SourceWise_2.png',
       '/projects/SourceWise_3.png',
     ],
-    detail: 'AI-guided research discovery app that maps broad topics into themes, ranked academic papers, credibility signals, debates, comparisons, and saved research history using Semantic Scholar, Microsoft Foundry IQ, and Supabase.',
+    detail: 'SourceWise helps students navigate research with AI agents that map topics, surface credible academic papers, and uncover scholarly debates. Built for the Microsoft Agents League Hackathon with Next.js, TypeScript, Microsoft Foundry IQ, Semantic Scholar, and Supabase.',
     href: 'https://source-wise-two.vercel.app/',
   },
   {
@@ -35,7 +36,7 @@ const projects = [
     href: 'https://www.linkedin.com/posts/hannah-manoj-11b463293_leedsbeckettuniversity-activity-7331292288523907072-iF4z?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEcUmucBD2x1hyizjZCkOYyxEemC-rJVU88',
   },
   {
-    title: 'Fifa 26 Match Predictor',
+    title: 'Fifa \'26 Match Predictor',
     type: 'Machine learning project',
     images: ['/projects/football.jpg'],
     detail: 'Streamlit football analytics app that predicts match win/draw/loss probabilities, explains rating and form factors, and runs Monte Carlo simulations for a 2026-style tournament bracket.',
@@ -53,7 +54,7 @@ const technologies = [
   { name: 'Python', mark: 'Py' },
   { name: 'TypeScript', mark: 'Ts' },
   { name: 'React.js', mark: '⚛' },
-  { name: 'Java', mark: 'Jv' },
+  { name: 'SQL', mark: 'sql' },
 ]
 
 const siteZoom = 0.9
@@ -157,12 +158,16 @@ function getLondonTime() {
 function App() {
   const cursorDotRef = useRef(null)
   const cursorRingRef = useRef(null)
+  const aboutSectionRef = useRef(null)
+  const collageRef = useRef(null)
   const workSectionRef = useRef(null)
   const cursorPosition = useRef({ x: -100, y: -100 })
   const ringPosition = useRef({ x: -100, y: -100 })
   const [showLoader, setShowLoader] = useState(true)
   const [introReady, setIntroReady] = useState(false)
   const [londonTime, setLondonTime] = useState(getLondonTime)
+  const [aboutVisible, setAboutVisible] = useState(false)
+  const [collageVisible, setCollageVisible] = useState(false)
   const [projectsVisible, setProjectsVisible] = useState(false)
 
   useEffect(() => {
@@ -182,6 +187,9 @@ function App() {
   useEffect(() => {
     const interactiveLinks = document.querySelectorAll(
       'a:not(.landing-model a), button:not(.landing-model button)',
+    )
+    const aboutPhotos = document.querySelectorAll(
+      '.about-portrait-frame, .collage-photo-frame',
     )
 
     const handlePointerMove = (event) => {
@@ -206,6 +214,14 @@ function App() {
       document.body.classList.remove('cursor-hovering-clickable')
     }
 
+    const handlePhotoEnter = () => {
+      document.body.classList.add('cursor-hovering-photo')
+    }
+
+    const handlePhotoLeave = () => {
+      document.body.classList.remove('cursor-hovering-photo')
+    }
+
     let animationFrame
 
     const animateRing = () => {
@@ -226,6 +242,10 @@ function App() {
       link.addEventListener('focus', handlePointerEnter)
       link.addEventListener('blur', handlePointerLeave)
     })
+    aboutPhotos.forEach((photo) => {
+      photo.addEventListener('pointerenter', handlePhotoEnter)
+      photo.addEventListener('pointerleave', handlePhotoLeave)
+    })
     animationFrame = window.requestAnimationFrame(animateRing)
 
     return () => {
@@ -236,7 +256,12 @@ function App() {
         link.removeEventListener('focus', handlePointerEnter)
         link.removeEventListener('blur', handlePointerLeave)
       })
+      aboutPhotos.forEach((photo) => {
+        photo.removeEventListener('pointerenter', handlePhotoEnter)
+        photo.removeEventListener('pointerleave', handlePhotoLeave)
+      })
       document.body.classList.remove('cursor-hovering-clickable')
+      document.body.classList.remove('cursor-hovering-photo')
       document.body.classList.remove('cursor-on-dark')
       window.cancelAnimationFrame(animationFrame)
     }
@@ -273,6 +298,50 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const aboutPortrait = aboutSectionRef.current
+
+    if (!aboutPortrait) {
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setAboutVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' },
+    )
+
+    observer.observe(aboutPortrait)
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const collage = collageRef.current
+
+    if (!collage) {
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setCollageVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    )
+
+    observer.observe(collage)
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
     const workSection = workSectionRef.current
 
     if (!workSection) {
@@ -297,9 +366,15 @@ function App() {
   }, [])
 
   return (
-    <main className={introReady ? 'intro-ready' : ''}>
-      <div className="cursor-ring" ref={cursorRingRef} aria-hidden="true"></div>
-      <div className="cursor-dot" ref={cursorDotRef} aria-hidden="true"></div>
+    <>
+      {createPortal(
+        <>
+          <div className="cursor-ring" ref={cursorRingRef} aria-hidden="true"></div>
+          <div className="cursor-dot" ref={cursorDotRef} aria-hidden="true"></div>
+        </>,
+        document.body,
+      )}
+      <main className={introReady ? 'intro-ready' : ''}>
       {showLoader && (
         <div className="site-loader" aria-hidden="true">
           <div className="loader-center">
@@ -315,8 +390,8 @@ function App() {
 
       <header className="nav-bar" aria-label="Primary navigation">
         <nav>
-          <a href="#home" className="brand">
-            Hannah M.
+          <a href="/" className="brand">
+            Hannah Manoj
           </a>
           <div className="nav-links">
             <div className="nav-main-links">
@@ -334,20 +409,21 @@ function App() {
         <div className="hero-grid">
           <div className="name-row">
             <h1>hannah</h1>
-            <div className="landing-model" aria-hidden="true">
-              <LandingModel />
-            </div>
             <span className="star-one" aria-hidden="true">✦</span>
             <span className="flower-one" aria-hidden="true">✿</span>
           </div>
 
           <p className="intro-copy">
-            Hello! - I&apos;m Hannah, a final year computer science student at Leeds, UK with a strong passion for data engineering, ML & UI/UX.
+            Hello! I&apos;m a final year computer science student at Leeds, UK with a strong passion for data engineering, ML & UI/UX.
           </p>
 
           <div className="bottom-flower" aria-hidden="true">✿</div>
 
           <a className="scroll-link" href="#about">Scroll to explore ↓</a>
+
+          <div className="landing-model" aria-hidden="true">
+            <LandingModel />
+          </div>
 
           <div className="hero-footer">
             <p>✱ London, UK</p>
@@ -360,27 +436,68 @@ function App() {
         </div>
       </section>
 
-      <section className="about-section" id="about">
+      <section
+        className={`about-section ${aboutVisible ? 'about-visible' : ''}`}
+        id="about"
+      >
         <div className="about-content">
           <h2>About me</h2>
-          <p>
-            I was born in India and raised in small country called Oman. Currently about to start my final year doing Computer Science in Leeds, UK. My interests have been data engineering, system design, and creating meaningful experiences through technology. I love turning complex ideas into something useful, scalable, and occasionally beautiful.
-            These are some technologies I have
-            been working with:
-          </p>
-          <div className="tech-grid" aria-label="Technologies">
-            {technologies.map((tech) => (
-              <div className="tech-chip" key={tech.name}>
-                <span aria-hidden="true">{tech.mark}</span>
-                <p>{tech.name}</p>
+          <div className="about-layout">
+            <figure className="about-portrait" ref={aboutSectionRef}>
+              <div className="about-portrait-frame">
+                <img src="/meincambridge.jpeg" alt="Hannah visiting Cambridge" loading="lazy" />
               </div>
-            ))}
+              <figcaption>Cambridge, UK <span aria-hidden="true">✦</span></figcaption>
+            </figure>
+            <div className="about-details">
+              <p>
+                I was born in India and raised in small country called Oman. Currently about to start my final year doing Computer Science in Leeds, UK. My interests have been data engineering, system design, and creating meaningful experiences through technology. I love turning complex ideas into something useful, scalable, and occasionally beautiful.
+                These are some technologies I have been working with:
+              </p>
+              <div className="tech-grid" aria-label="Technologies">
+                {technologies.map((tech) => (
+                  <div className="tech-chip" key={tech.name}>
+                    <span aria-hidden="true">{tech.mark}</span>
+                    <p>{tech.name}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="about-note">
+                In my free time, I love long walks, hikes - basically touching grass any chance I get, and
+                travelling anywhere the sun exists.
+              </p>
+            </div>
+            <div
+              className={`travel-collage ${collageVisible ? 'travel-collage-visible' : ''}`}
+              ref={collageRef}
+              aria-label="Travel photographs"
+            >
+              <figure className="collage-photo collage-hampstead">
+                <div className="collage-photo-frame">
+                  <img src="/collage/hampstead.jpeg" alt="London skyline from Hampstead Heath" loading="lazy" />
+                </div>
+                <figcaption>Hampstead, UK <span aria-hidden="true">✦</span></figcaption>
+              </figure>
+              <figure className="collage-photo collage-sisters">
+                <div className="collage-photo-frame">
+                  <img src="/collage/7sisters.jpeg" alt="The Seven Sisters cliffs" loading="lazy" />
+                </div>
+                <figcaption>Seven Sisters, UK <span aria-hidden="true">✦</span></figcaption>
+              </figure>
+              <figure className="collage-photo collage-oman">
+                <div className="collage-photo-frame">
+                  <img src="/collage/oman.jpeg" alt="Sunset over the coast in Oman" loading="lazy" />
+                </div>
+                <figcaption>Oman <span aria-hidden="true">✦</span></figcaption>
+              </figure>
+              <figure className="collage-photo collage-dubai">
+                <div className="collage-photo-frame">
+                  <img src="/collage/dubai.JPG" alt="Museum of the Future in Dubai" loading="lazy" />
+                </div>
+                <figcaption>Dubai, UAE <span aria-hidden="true">✦</span></figcaption>
+              </figure>
+            </div>
           </div>
-          <p className="about-note">
-
-            In my free time, I love long walks, hikes - basically touching grass any chance I get, and
-            travelling anywhere the sun exists.
-          </p>
         </div>
 
       </section>
@@ -399,7 +516,16 @@ function App() {
           <p>June 2026 - Present</p>
           <ul>
             <li>
-              Supporting data engineering work across data workflows, reporting, and analytics.
+              Designing a vendor-neutral, on-premises enterprise lakehouse to modernise Madayn&apos;s
+              BI and analytics platform while meeting government security and data sovereignty requirements.
+            </li>
+            <li>
+              Evaluating open-source technologies including Airflow, Spark, Iceberg, Trino, MinIO,
+              NiFi, OpenMetadata, and GitLab for scalable data integration, governance, analytics, and AI.
+            </li>
+            <li>
+              Developing an end-to-end proof of concept and implementation roadmap covering ingestion,
+              orchestration, lakehouse storage, distributed processing, SQL analytics, governance, and CI/CD.
             </li>
           </ul>
         </article>
@@ -443,9 +569,14 @@ function App() {
                   {currentImage && (
                     <img src={currentImage} alt="" loading="lazy" aria-hidden="true" />
                   )}
-                  <h3>{project.title}</h3>
                 </div>
-                <p className="project-type">{project.type}</p>
+                <div className="project-heading-row">
+                  <h3>{project.title}</h3>
+                  <p className="project-type">{project.type}</p>
+                </div>
+                <div className="project-copy">
+                  <p className="project-detail">{project.detail}</p>
+                </div>
                 <a className="project-link" href={project.href} target="_blank" rel="noreferrer" aria-label={`View ${project.title}: ${project.detail}`}>
                   View project <span className="project-arrow" aria-hidden="true">›</span>
                 </a>
@@ -468,8 +599,13 @@ function App() {
             hannah.manoj@gmail.com
           </a>
         </div>
+        <div className="footer-social-links">
+          <a href="https://www.linkedin.com/in/hannah-manoj-11b463293/" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://github.com/hannahmanoj" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
       </footer>
-    </main>
+      </main>
+    </>
   )
 }
 
