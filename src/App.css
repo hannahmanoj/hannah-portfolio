@@ -698,6 +698,10 @@ h1 {
   --project-reveal-delay: 0.3s;
 }
 
+.project-card:nth-child(5) {
+  --project-reveal-delay: 0.4s;
+}
+
 .projects-visible .project-identity {
   clip-path: inset(0);
 }

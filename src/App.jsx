@@ -39,13 +39,14 @@ const projects = [
     title: 'Fifa \'26 Match Predictor',
     type: 'Machine learning project',
     images: ['/projects/football.jpg'],
-    detail: 'Streamlit football analytics app that predicts match win/draw/loss probabilities, explains rating and form factors, and runs Monte Carlo simulations for a 2026-style tournament bracket.',
+    detail: 'Machine learning-powered Streamlit app that predicts football match win, draw, and loss probabilities using team ratings and recent form. Features explainable predictions, Monte Carlo tournament simulations, and an interactive 2026 World Cup-style bracket.',
     href: 'https://football-match-predictor-2026.streamlit.app/',
   },
   {
     title: 'Crime Database Management Application',
     type: 'Database systems project',
-    detail: 'Built a SQL-based crime data management system with relational database design, triggers, sequences, and automated integrity checks for law-enforcement case tracking.',
+    images: ['/projects/crimeoracle.png'],
+    detail: 'Designed and developed an enterprise CRUD application using Oracle APEX, Oracle SQL, and PL/SQL with interactive dashboards, reporting, and case management features.',
     href: 'https://github.com/hannahmanoj/Crime-Database-Management-Application',
   },
 ]
@@ -189,7 +190,7 @@ function App() {
       'a:not(.landing-model a), button:not(.landing-model button)',
     )
     const aboutPhotos = document.querySelectorAll(
-      '.about-portrait-frame, .collage-photo-frame',
+      '.about-portrait-frame, .collage-photo-frame, .project-identity',
     )
 
     const handlePointerMove = (event) => {
@@ -400,7 +401,7 @@ function App() {
               <a href="#work">Projects 05</a>
               <a href="/resume.pdf" className="resume-link" download>Résumé ↗</a>
             </div>
-            <a href="mailto:hello@example.com">Contact</a>
+            <a href="mailto:hannah.manoj@gmail.com">Contact</a>
           </div>
         </nav>
       </header>
