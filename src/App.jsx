@@ -534,6 +534,14 @@ function App() {
           <div>
             <p className="eyebrow">Amazon · London, England</p>
             <h3>Business Intelligence Engineer Intern</h3>
+            <a
+              className="experience-vlog-link"
+              href="https://www.youtube.com/watch?v=ISF06oMxy3s"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Placement vlog <span aria-hidden="true">↗</span>
+            </a>
           </div>
           <p>June 2025 - May 2026</p>
           <ul>
