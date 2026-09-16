@@ -7,13 +7,36 @@ import './App.css'
 
 const projects = [
   {
+    title: 'Open-Source Lakehouse',
+    type: 'Data engineering & AI',
+    images: [
+      '/projects/data-lakehouse.png',
+      '/projects/lakehouse copilot.png',
+      '/projects/services&health.png',
+    ],
+    imageAlts: [
+      'Data lakehouse platform overview',
+      'AI operations copilot interface',
+      'Platform services and health dashboard',
+    ],
+    gallery: true,
+    detail: 'A vendor-neutral data lakehouse designed to run entirely on-premises. It brings together MinIO, Apache Iceberg, Spark, Trino, NiFi, Airflow, SQL Server, OpenMetadata, and Power BI for end-to-end ingestion, transformation, governance, querying, and visualisation. An operations copilot powered by Ollama, Qwen3, BGE-M3, PostgreSQL with pgvector, and hybrid RAG helps engineers investigate platform issues.',
+    href: 'https://github.com/hannahmanoj/opensource-lakehouse-poc',
+  },
+  {
     title: 'Shibumi',
     type: 'Interactive space atlas',
     images: [
       '/projects/shibumi.png',
-      '/projects/shibumbi_2.png',
+      '/projects/shibumi_2.png',
       '/projects/shibumi_3.png',
     ],
+    imageAlts: [
+      'Shibumi interactive satellite atlas',
+      'Shibumi orbital visualisation',
+      'Shibumi lunar exploration view',
+    ],
+    gallery: true,
     detail: 'Shibumi is an interactive space atlas featuring 11,000+ live satellites, cinematic orbital visualizations, 3D planets, and real NASA/JPL lunar data. Built with Next.js, Mapbox GL JS, Three.js, and Vercel.',
     href: 'https://shibumi-kohl.vercel.app/',
   },
@@ -25,15 +48,26 @@ const projects = [
       '/projects/SourceWise_2.png',
       '/projects/SourceWise_3.png',
     ],
+    imageAlts: [
+      'SourceWise AI research assistant interface',
+      'SourceWise academic paper discovery view',
+      'SourceWise research topic and scholarly debate view',
+    ],
+    gallery: true,
     detail: 'SourceWise helps students navigate research with AI agents that map topics, surface credible academic papers, and uncover scholarly debates. Built for the Microsoft Agents League Hackathon with Next.js, TypeScript, Microsoft Foundry IQ, Semantic Scholar, and Supabase.',
     href: 'https://source-wise-two.vercel.app/',
   },
   {
     title: 'Smart Door Security System',
     type: 'Team project',
-    images: ['/projects/Smart Door Security System.png'],
+    images: ['/projects/smartdoor.jpeg', '/projects/smartdoor2.jpeg'],
+    imageAlts: [
+      'Smart door mobile app connected to Raspberry Pi security hardware',
+      'Facial recognition and electronic lock server running during testing',
+    ],
+    gallery: true,
     detail: 'Affordable facial-recognition security system for homes, schools, and businesses using an iOS app, React, Raspberry Pi, and OpenCV.',
-    href: 'https://www.linkedin.com/posts/hannah-manoj-11b463293_leedsbeckettuniversity-activity-7331292288523907072-iF4z?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEcUmucBD2x1hyizjZCkOYyxEemC-rJVU88',
+    href: 'https://github.com/hannahmanoj/smart-door-security-system',
   },
   {
     title: 'Fifa \'26 Match Predictor',
@@ -136,6 +170,55 @@ function LandingModel() {
 }
 
 useGLTF.preload('/models/lotus-3d.glb')
+
+function ProjectCarousel({ project }) {
+  const [activeImage, setActiveImage] = useState(0)
+  const touchStartX = useRef(null)
+  const imageCount = project.images.length
+
+  const showPrevious = () => {
+    setActiveImage((current) => (current - 1 + imageCount) % imageCount)
+  }
+
+  const showNext = () => {
+    setActiveImage((current) => (current + 1) % imageCount)
+  }
+
+  const handleTouchEnd = (event) => {
+    if (touchStartX.current === null) return
+
+    const distance = event.changedTouches[0].clientX - touchStartX.current
+    touchStartX.current = null
+
+    if (Math.abs(distance) < 45) return
+    if (distance > 0) showPrevious()
+    else showNext()
+  }
+
+  return (
+    <div
+      className="project-carousel"
+      onTouchStart={(event) => { touchStartX.current = event.touches[0].clientX }}
+      onTouchEnd={handleTouchEnd}
+    >
+      <img
+        key={project.images[activeImage]}
+        src={project.images[activeImage]}
+        alt={project.imageAlts?.[activeImage] ?? `${project.title} screenshot ${activeImage + 1}`}
+        loading="lazy"
+      />
+      <div className="project-carousel-controls" aria-label={`${project.title} screenshots`}>
+        <button type="button" onClick={showPrevious} aria-label="Previous screenshot">←</button>
+        <div className="project-carousel-dots" aria-hidden="true">
+          {project.images.map((image, index) => (
+            <span className={index === activeImage ? 'active' : ''} key={image}></span>
+          ))}
+        </div>
+        <button type="button" onClick={showNext} aria-label="Next screenshot">→</button>
+      </div>
+    </div>
+  )
+}
 
 function getLondonTime() {
   const timeParts = new Intl.DateTimeFormat('en-GB', {
@@ -381,8 +464,8 @@ function App() {
           <div className="loader-center">
             <div className="loader-symbols">
               <span className="loader-flower">✿</span>
-              <span className="loader-lotus">✤</span>
-              <span className="loader-flower">✳</span>
+              <span className="loader-lotus">✿</span>
+              <span className="loader-flower">✿</span>
             </div>
             <p>©2026</p>
           </div>
@@ -398,7 +481,7 @@ function App() {
             <div className="nav-main-links">
               <a href="#about">About</a>
               <a href="#experience">Experience</a>
-              <a href="#work">Projects 05</a>
+              <a href="#work">Projects 06</a>
               <a href="/resume.pdf" className="resume-link" download>Résumé ↗</a>
             </div>
             <a href="mailto:hannah.manoj@gmail.com">Contact</a>
@@ -452,7 +535,7 @@ function App() {
             </figure>
             <div className="about-details">
               <p>
-                I was born in India and raised in small country called Oman. Currently about to start my final year doing Computer Science in Leeds, UK. My interests have been data engineering, system design, and creating meaningful experiences through technology. I love turning complex ideas into something useful, scalable, and occasionally beautiful.
+                I was born in India and raised in small country called Oman. Currently about to start my final year doing Computer Science in Leeds, UK. My interests have been data engineering, system design, and AI/ML.
                 These are some technologies I have been working with:
               </p>
               <div className="tech-grid" aria-label="Technologies">
@@ -564,7 +647,7 @@ function App() {
       <section className={`work-section ${projectsVisible ? 'projects-visible' : ''}`} id="work" ref={workSectionRef}>
         <div className="section-heading">
           <h2>
-            <span>projects</span> <em></em>
+            <span>Projects</span> <em></em>
           </h2>
         </div>
         <div className="project-grid">
@@ -573,11 +656,13 @@ function App() {
             const currentImage = projectImages[0]
 
             return (
-              <article className={`project-card ${projectImages.length ? '' : 'project-card-text-only'}`} key={project.title}>
+              <article className={`project-card ${projectImages.length ? '' : 'project-card-text-only'} ${project.gallery ? 'project-card-gallery' : ''}`} key={project.title}>
                 <div className="project-identity">
-                  {currentImage && (
-                    <img src={currentImage} alt="" loading="lazy" aria-hidden="true" />
-                  )}
+                  {project.gallery
+                    ? <ProjectCarousel project={project} />
+                    : currentImage && (
+                        <img src={currentImage} alt="" loading="lazy" aria-hidden="true" />
+                      )}
                 </div>
                 <div className="project-heading-row">
                   <h3>{project.title}</h3>
