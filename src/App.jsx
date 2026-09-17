@@ -20,7 +20,7 @@ const projects = [
       'Platform services and health dashboard',
     ],
     gallery: true,
-    detail: 'A vendor-neutral data lakehouse designed to run entirely on-premises. It brings together MinIO, Apache Iceberg, Spark, Trino, NiFi, Airflow, SQL Server, OpenMetadata, and Power BI for end-to-end ingestion, transformation, governance, querying, and visualisation. An operations copilot powered by Ollama, Qwen3, BGE-M3, PostgreSQL with pgvector, and hybrid RAG helps engineers investigate platform issues.',
+    detail: 'A vendor-neutral open source data lakehouse designed to run entirely on-premises and containerised with Docker. It brings together MinIO, Apache Iceberg, Spark, Trino, NiFi, Airflow, SQL Server, OpenMetadata, and Power BI for end-to-end ingestion, transformation, governance, querying, and visualisation. An operations copilot powered by Ollama, Qwen3, BGE-M3, PostgreSQL with pgvector, and hybrid RAG helps engineers investigate platform issues.',
     href: 'https://github.com/hannahmanoj/opensource-lakehouse-poc',
   },
   {
@@ -37,30 +37,13 @@ const projects = [
       'Shibumi lunar exploration view',
     ],
     gallery: true,
-    detail: 'Shibumi is an interactive space atlas featuring 11,000+ live satellites, cinematic orbital visualizations, 3D planets, and real NASA/JPL lunar data. Built with Next.js, Mapbox GL JS, Three.js, and Vercel.',
+    detail: 'Developed a real-time 3D Earth and orbital visualisation using Next.js, TypeScript, Mapbox GL, and Three.js. Integrated CelesTrak TLE data with SGP4 orbit propagation to calculate and visualize 11,000+ satellites and their orbital trails, featuring optimized Canvas rendering, simulation controls, terrain visualisation, and NASA/JPL lunar spacecraft data',
     href: 'https://shibumi-kohl.vercel.app/',
-  },
-  {
-    title: 'SourceWise',
-    type: 'Multi AI agent research assistant',
-    images: [
-      '/projects/SourceWise.png',
-      '/projects/SourceWise_2.png',
-      '/projects/SourceWise_3.png',
-    ],
-    imageAlts: [
-      'SourceWise AI research assistant interface',
-      'SourceWise academic paper discovery view',
-      'SourceWise research topic and scholarly debate view',
-    ],
-    gallery: true,
-    detail: 'SourceWise helps students navigate research with AI agents that map topics, surface credible academic papers, and uncover scholarly debates. Built for the Microsoft Agents League Hackathon with Next.js, TypeScript, Microsoft Foundry IQ, Semantic Scholar, and Supabase.',
-    href: 'https://source-wise-two.vercel.app/',
   },
   {
     title: 'Smart Door Security System',
     type: 'Team project',
-    images: ['/projects/smartdoor.jpeg', '/projects/smartdoor2.jpeg'],
+    images: ['/projects/smartdoor.png', '/projects/smartdoor2.jpeg'],
     imageAlts: [
       'Smart door mobile app connected to Raspberry Pi security hardware',
       'Facial recognition and electronic lock server running during testing',
@@ -72,8 +55,9 @@ const projects = [
   {
     title: 'Fifa \'26 Match Predictor',
     type: 'Machine learning project',
-    images: ['/projects/football.jpg'],
+    images: ['/projects/football1.png', '/projects/football2.png', '/projects/football3.png', '/projects/football4.png'],
     detail: 'Machine learning-powered Streamlit app that predicts football match win, draw, and loss probabilities using team ratings and recent form. Features explainable predictions, Monte Carlo tournament simulations, and an interactive 2026 World Cup-style bracket.',
+    gallery: true,
     href: 'https://football-match-predictor-2026.streamlit.app/',
   },
   {
@@ -481,7 +465,7 @@ function App() {
             <div className="nav-main-links">
               <a href="#about">About</a>
               <a href="#experience">Experience</a>
-              <a href="#work">Projects 06</a>
+              <a href="#work">Projects 05</a>
               <a href="/resume.pdf" className="resume-link" download>Résumé ↗</a>
             </div>
             <a href="mailto:hannah.manoj@gmail.com">Contact</a>

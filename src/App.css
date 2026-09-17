@@ -816,7 +816,8 @@ h1 {
 }
 
 .project-card:nth-child(4) .project-identity img {
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
 }
 
 .project-card:hover .project-identity img,
