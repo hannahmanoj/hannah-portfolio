@@ -581,7 +581,7 @@ function App() {
             <p className="eyebrow">Madayn · Muscat, Oman</p>
             <h3>Data Engineer Intern</h3>
           </div>
-          <p>June 2026 - Present</p>
+          <p>June 2026 - September 2026</p>
           <ul>
             <li>
               Designing a vendor-neutral, on-premises enterprise lakehouse to modernise Madayn&apos;s
