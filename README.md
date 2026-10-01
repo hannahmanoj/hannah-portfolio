@@ -4,7 +4,7 @@ Created using React + Vite + Three.js and deployed via Vercel
 
 
 
-View here: https://hannah-portfolio-rho.vercel.app/
+View here: [portfolio](https://hannahmanoj.vercel.app/)
 
 ## Sneak peak
 
