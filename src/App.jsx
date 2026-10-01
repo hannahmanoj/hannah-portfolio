@@ -7,6 +7,18 @@ import './App.css'
 
 const projects = [
   {
+    title: 'Ohbot English-Speaking Companion',
+    type: 'Student hackathon project',
+    images: ['/projects/me and aleena.jpeg', '/projects/ohbot.jpg'],
+    imageAlts: [
+      'Hannah and Aleena presenting their Ohbot project',
+      'Ohbot English-speaking companion robot',
+    ],
+    gallery: true,
+    detail: 'Built for the Ohbot AI and Robotics Hackathon hosted by UST and Ohbot. My team built a speaking companion helps immigrants and other English learners practise difficult real-world conversations safely and privately. The prototype uses local Whisper speech recognition, Phi-4-mini through Ollama, text-to-speech, and Ohbot\'s expressive movement, with optional kids\' content powered by Claude through Amazon Bedrock.',
+    href: 'https://github.com/aleena-s-hashmi/robot_hackathon',
+  },
+  {
     title: 'Open-Source Lakehouse',
     type: 'Data engineering & AI',
     images: [
@@ -465,7 +477,7 @@ function App() {
             <div className="nav-main-links">
               <a href="#about">About</a>
               <a href="#experience">Experience</a>
-              <a href="#work">Projects 05</a>
+              <a href="#work">Projects 06</a>
               <a href="/resume.pdf" className="resume-link" download>Résumé ↗</a>
             </div>
             <a href="mailto:hannah.manoj@gmail.com">Contact</a>
