@@ -9,7 +9,7 @@ const projects = [
   {
     title: 'Ohbot English-Speaking Companion',
     type: 'Student hackathon project',
-    images: ['/projects/me and aleena.jpeg', '/projects/ohbot.jpg'],
+    images: ['/projects/group.jpeg', '/projects/me and aleena.jpeg', '/projects/ohbot.jpg'],
     imageAlts: [
       'Hannah and Aleena presenting their Ohbot project',
       'Ohbot English-speaking companion robot',
@@ -55,7 +55,7 @@ const projects = [
   {
     title: 'Smart Door Security System',
     type: 'Team project',
-    images: ['/projects/smartdoor.png', '/projects/smartdoor2.jpeg'],
+    images: ['/projects/smartdoor.png', '/projects/smartdoor2.jpeg', '/projects/certs.jpeg'],
     imageAlts: [
       'Smart door mobile app connected to Raspberry Pi security hardware',
       'Facial recognition and electronic lock server running during testing',
