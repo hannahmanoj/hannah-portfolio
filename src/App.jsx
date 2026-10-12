@@ -590,6 +590,22 @@ function App() {
         </div>
         <article className="experience-card">
           <div>
+            <p className="eyebrow">Thinking About Thinking · London, England</p>
+            <h3>Ambassador</h3>
+          </div>
+          <p>October 2026 - Present</p>
+          <ul>
+            <li>AE Global Summit 2026 - Open problems for AI</li>
+            <li>
+              Representing Thinking About Thinking, a non-profit organisation bringing together people across AI, neuroscience, mathematics and scientific discovery at my university.
+            </li>
+            <li>
+              Ambassadors are selected through invitation and review to help carry these conversations into their own institutions and communities.
+            </li>
+          </ul>
+        </article>
+        <article className="experience-card">
+          <div>
             <p className="eyebrow">Madayn · Muscat, Oman</p>
             <h3>Data Engineer Intern</h3>
           </div>
