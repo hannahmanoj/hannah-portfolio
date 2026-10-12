@@ -1,6 +1,6 @@
 # Portfolio Website
 
-Created using React + Vite + Three.js and deployed via Vercel
+Created using React + Vite + Three.js and deployed via vercel
 
 
 
